@@ -1,0 +1,1246 @@
+#-------------------------------------------
+#Author: Jacky Xao
+#Date: January 14 2014 - January 21 2014
+#Purpose: To play a game of dominos
+#-------------------------------------------
+import random
+import time
+import tkMessageBox
+from Tkinter import*
+root = Tk()
+root.title ("Domino")
+#=================Global====================
+#==================Class====================
+#___________________________________________
+#Pikachu Class
+#Author: Jacky Xao
+#Date: November 28 2013
+#Purpose: Prints a 50 x 50 pikachu sprite on a canvas
+#Fields:
+#   x: x coordinate
+#   y: y coordinate
+#Methods:
+#   __init__: constructor
+#   __str__: string overloader
+#   Cset: sets the x and y coordinate
+#   draw: draws a line
+#   drawPikachu: draws the pikachu
+class Pikachu:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__init__
+    #Author: Jacky Xao
+    #Date: November 26 2013
+    #Purpose: initialize the object
+    def __init__(self):
+        self.x = 1
+        self.y = 1
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #Author: Jacky Xao
+    #Date: November 26 2013
+    #Purpose: sets the coordinates
+    #Parameters: x coord, y coord
+    def Cset(self,X,Y):
+        self.x = X
+        self.y = Y
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #Author: Jacky Xao
+    #Date: November 26 2013
+    #Purpose: to draw a horizontal line going right
+    #Parameters: canvas, colour, length
+    def draw(self,canvas,colour,length=1):
+        x2 = int(self.x) + int(length)
+        canvas.create_line(self.x,self.y,x2,self.y,fill = colour)
+        self.x = x2
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #Author: Jacky Xao
+    #Date: November 26 2013
+    #Purpose: draws the entire pikachu
+    #Parameters: canvas, x coord, y coord
+    def drawPikachu(self,canvas,X,Y):
+        b = "black"
+        by = "#FFF6A4" #Bright Yellow
+        y = "#F6E652" #Yellow
+        dy = "#F6BD20" #Dark Yellow
+        bw = "#9C5200" #Brown
+        w = "white"
+        r = "red"
+        c = canvas
+        self.Cset(X+14,4+Y),self.draw(c,b),self.Cset(X+13,5+Y),self.draw(c,b,3),self.Cset(X+13,6+Y)
+        self.draw(c,b,3),self.Cset(X+13,7+Y),self.draw(c,b,4),self.Cset(X+12,8+Y),self.draw(c,b,5)
+        self.Cset(X+12,9+Y),self.draw(c,b,5),self.Cset(X+12,10+Y),self.draw(c,b,3)
+        self.draw(c,dy,1),self.draw(c,b,1),self.draw(c,"",17),self.draw(c,b,4),self.Cset(X+12,11+Y)
+        self.draw(c,b,2),self.draw(c,dy,3),self.draw(c,b),self.draw(c,"",13),self.draw(c,b,9)
+        self.Cset(X+12,12+Y),self.draw(c,b),self.draw(c,dy,4),self.draw(c,b),self.draw(c,"",11)
+        self.draw(c,b,2),self.draw(c,y,3),self.draw(c,b,6),self.Cset(X+12,13+Y)
+        self.draw(c,b),self.draw(c,dy,4),self.draw(c,b),self.draw(c,""),self.draw(c,b,6)
+        self.draw(c,"",2),self.draw(c,b,2),self.draw(c,y,5),self.draw(c,b,5),self.Cset(X+13,14+Y)
+        self.draw(c,b),self.draw(c,dy,3),self.draw(c,y),self.draw(c,b),self.draw(c,by,4)
+        self.draw(c,y,2),self.draw(c,b,2),self.draw(c,y,6),self.draw(c,b,5),self.Cset(X+13,15+Y)
+        self.draw(c,b),self.draw(c,dy,3),self.draw(c,y),self.draw(c,by,6),self.draw(c,y,9)
+        self.draw(c,b,4),self.draw(c,"",7),self.draw(c,b,2),self.Cset(X+14,16+Y)
+        self.draw(c,b),self.draw(c,dy),self.draw(c,y),self.draw(c,by,6),self.draw(c,y,9)
+        self.draw(c,b,3),self.draw(c,"",8),self.draw(c,b),self.draw(c,y,2),self.draw(c,b)
+        self.Cset(X+14,17+Y),self.draw(c,b),self.draw(c,dy),self.draw(c,y,8),self.draw(c,b,2)
+        self.draw(c,y,4),self.draw(c,b,2),self.draw(c,"",10),self.draw(c,b),self.draw(c,y,4)
+        self.draw(c,b),self.Cset(X+13,18+Y),self.draw(c,b),self.draw(c,dy),self.draw(c,b)
+        self.draw(c,dy),self.draw(c,y,6),self.draw(c,b),self.draw(c,w),self.draw(c,b,2)
+        self.draw(c,y,3),self.draw(c,b),self.draw(c,"",10),self.draw(c,b),self.draw(c,y,5)
+        self.draw(c,b),self.Cset(X+13,19+Y),self.draw(c,b,2),self.draw(c,w),self.draw(c,dy)
+        self.draw(c,y,6),self.draw(c,b,4),self.draw(c,y,3),self.draw(c,b),self.draw(c,"",9)
+        self.draw(c,b),self.draw(c,y,7),self.draw(c,b),self.Cset(X+13,20+Y),self.draw(c,b,3)
+        self.draw(c,y,2),self.draw(c,bw),self.draw(c,dy),self.draw(c,y,4),self.draw(c,b,2)
+        self.draw(c,y,4),self.draw(c,b),self.draw(c,"",7),self.draw(c,b,2),self.draw(c,y,8)
+        self.draw(c,b),self.Cset(X+13,21+Y),self.draw(c,b,2),self.draw(c,y,15),self.draw(c,b)
+        self.draw(c,"",6),self.draw(c,b),self.draw(c,y,10),self.draw(c,b),self.Cset(X+12,22+Y)
+        self.draw(c,b),self.draw(c,y,5),self.draw(c,bw,3),self.draw(c,y,6),self.draw(c,r,2)
+        self.draw(c,y),self.draw(c,dy),self.draw(c,b),self.draw(c,"",4),self.draw(c,b)
+        self.draw(c,y,12),self.draw(c,b),self.Cset(X+12,23+Y),self.draw(c,b),self.draw(c,r)
+        self.draw(c,dy),self.draw(c,y),self.draw(c,bw,3),self.draw(c,dy,2),self.draw(c,bw,3)
+        self.draw(c,y),self.draw(c,dy),self.draw(c,r,4),self.draw(c,dy),self.draw(c,b)
+        self.draw(c,"",3),self.draw(c,b),self.draw(c,y,13),self.draw(c,b),self.Cset(X+12,24+Y)
+        self.draw(c,b),self.draw(c,r),self.draw(c,dy,12),self.draw(c,r,4),self.draw(c,dy)
+        self.draw(c,b),self.draw(c,"",3),self.draw(c,b),self.draw(c,dy),self.draw(c,y,12)
+        self.draw(c,b),self.Cset(X+12,25+Y),self.draw(c,b),self.draw(c,r),self.draw(c,dy,13)
+        self.draw(c,r,2),self.draw(c,dy,2),self.draw(c,b),self.draw(c,"",2),self.draw(c,b)
+        self.draw(c,dy,4),self.draw(c,y,9),self.draw(c,b),self.Cset(X+13,26+Y)
+        self.draw(c,b),self.draw(c,dy,17),self.draw(c,b),self.draw(c,""),self.draw(c,b)
+        self.draw(c,dy,7),self.draw(c,y,5),self.draw(c,b,2),self.Cset(X+14,27+Y)
+        self.draw(c,b),self.draw(c,dy,16),self.draw(c,b),self.draw(c,""),self.draw(c,b)
+        self.draw(c,dy,9),self.draw(c,y),self.draw(c,b,2),self.Cset(X+14,28+Y)
+        self.draw(c,b),self.draw(c,dy,16),self.draw(c,y),self.draw(c,b),self.draw(c,"")
+        self.draw(c,b),self.draw(c,dy,7),self.draw(c,b,2),self.Cset(X+14,29+Y)
+        self.draw(c,b),self.draw(c,y),self.draw(c,dy,14),self.draw(c,y,2),self.draw(c,b)
+        self.draw(c,"",2),self.draw(c,b),self.draw(c,dy,4),self.draw(c,b,2),self.Cset(X+14,30+Y)
+        self.draw(c,b),self.draw(c,y,3),self.draw(c,dy,11),self.draw(c,y,3),self.draw(c,b)
+        self.draw(c,"",3),self.draw(c,b),self.draw(c,dy,2),self.draw(c,b),self.Cset(X+14,31+Y)
+        self.draw(c,b),self.draw(c,y,5),self.draw(c,dy,5),self.draw(c,b),self.draw(c,dy)
+        self.draw(c,y,5),self.draw(c,b),self.draw(c,"",4),self.draw(c,b),self.draw(c,dy,2)
+        self.draw(c,b),self.Cset(X+14,32+Y),self.draw(c,b),self.draw(c,y,2),self.draw(c,b)
+        self.draw(c,y,6),self.draw(c,b),self.draw(c,y,7),self.draw(c,b),self.draw(c,"",3)
+        self.draw(c,b),self.draw(c,dy,3),self.draw(c,b),self.Cset(X+13,33+Y)
+        self.draw(c,b),self.draw(c,y,3),self.draw(c,b),self.draw(c,y,6),self.draw(c,b)
+        self.draw(c,y,8),self.draw(c,b),self.draw(c,""),self.draw(c,b),self.draw(c,dy,5)
+        self.draw(c,b),self.Cset(X+13,34+Y),self.draw(c,b),self.draw(c,y,4),self.draw(c,b)
+        self.draw(c,y,4),self.draw(c,b),self.draw(c,y,5),self.draw(c,b),self.draw(c,y,3)
+        self.draw(c,b,2),self.draw(c,dy,5),self.draw(c,b,2),self.Cset(X+13,35+Y)
+        self.draw(c,b,2),self.draw(c,y,3),self.draw(c,b),self.draw(c,y,4),self.draw(c,b)
+        self.draw(c,y,5),self.draw(c,b),self.draw(c,y,2),self.draw(c,dy),self.draw(c,b)
+        self.draw(c,dy,4),self.draw(c,b,2),self.Cset(X+13,36+Y),self.draw(c,b,2),self.draw(c,y,3)
+        self.draw(c,b),self.draw(c,y,3),self.draw(c,b),self.draw(c,y,5),self.draw(c,b)
+        self.draw(c,y,3),self.draw(c,dy),self.draw(c,b,2),self.draw(c,dy,2),self.draw(c,b)
+        self.Cset(X+13,37+Y),self.draw(c,b,2),self.draw(c,y,4),self.draw(c,b),self.draw(c,y,2)
+        self.draw(c,b),self.draw(c,y,4),self.draw(c,b),self.draw(c,y,3),self.draw(c,dy,3)
+        self.draw(c,b,2),self.draw(c,bw,2),self.draw(c,b),self.Cset(X+12,38+Y)
+        self.draw(c,b),self.draw(c,y,2),self.draw(c,b),self.draw(c,y,2),self.draw(c,b)
+        self.draw(c,y,4),self.draw(c,b),self.draw(c,y,2),self.draw(c,b),self.draw(c,y,4)
+        self.draw(c,dy,3),self.draw(c,b),self.draw(c,""),self.draw(c,b),self.draw(c,bw,2)
+        self.draw(c,b),self.Cset(X+12,39+Y),self.draw(c,b),self.draw(c,y,3),self.draw(c,b,2)
+        self.draw(c,y,6),self.draw(c,b,2),self.draw(c,y,4),self.draw(c,dy,4),self.draw(c,b,2)
+        self.draw(c,bw,3),self.draw(c,b),self.Cset(X+11,40+Y),self.draw(c,b),self.draw(c,dy)
+        self.draw(c,y,17),self.draw(c,dy,4),self.draw(c,bw,3),self.draw(c,b,2),self.Cset(X+11,41+Y)
+        self.draw(c,b),self.draw(c,dy,2),self.draw(c,y,15),self.draw(c,dy,6),self.draw(c,b,2)
+        self.Cset(X+11,42+Y),self.draw(c,b),self.draw(c,dy,5),self.draw(c,y,7),self.draw(c,dy,3)
+        self.draw(c,y),self.draw(c,dy,7),self.draw(c,b),self.Cset(X+12,43+Y),self.draw(c,b)
+        self.draw(c,dy,21),self.draw(c,b),self.Cset(X+12,44+Y),self.draw(c,b),self.draw(c,dy,21)
+        self.draw(c,b),self.Cset(X+13,45+Y),self.draw(c,b),self.draw(c,dy,6),self.draw(c,b,5)
+        self.draw(c,dy,8),self.draw(c,b),self.Cset(X+12,46+Y),self.draw(c,b,2),self.draw(c,dy,4)
+        self.draw(c,b,2),self.draw(c,"",5),self.draw(c,b,3),self.draw(c,dy,3),self.draw(c,b,2)
+        self.Cset(X+11,47+Y),self.draw(c,b),self.draw(c,bw,3),self.draw(c,dy),self.draw(c,b,2)
+        self.draw(c,"",10),self.draw(c,b),self.draw(c,dy,3),self.draw(c,bw),self.draw(c,b)
+        self.Cset(X+12,48+Y),self.draw(c,b,4),self.draw(c,"",13),self.draw(c,b),self.draw(c,dy)
+        self.draw(c,bw,2),self.draw(c,b),self.Cset(X+30,49+Y),self.draw(c,b,3)
+#___________________________________________
+#Domino class
+#Author: Jacky Xao
+#Date: January 15 2014
+#Purpose: to create a domino
+#Fields:
+    #value: the value of the domino, from 0 to 66
+#Methods:
+    #get: returns the value of the domino
+    #randomize: randomizes the domino value
+    #setValue: sets the value of the domino. Default is 66
+        #value: The value of the domino. 0 to 66
+    #display: displays the domino
+        #x: x-coord of top left corner
+        #y: y-coord of top left corner
+        #canvas: canvas to draw on
+        #orient: "h" for horizontal, "v" for vertical. Default is "h"
+        #faceUp: True for dots shown, False for no dots. Default is True
+        #dot: colour of the dots
+        #reverse: reverses the value
+    #drawDots: to draw dots
+        #x: x-coord of top left corner
+        #y: y-coord of top left corner
+        #value: value of die
+        #canvas: canvas to draw on
+        #colour: colour of dots
+class Domino:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__init__
+    #Author: Jacky Xao
+    #Date: January 14 2014 
+    #Purpose: constructor
+    def __init__(self):
+        self.randomize()        
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__str__
+    #Author: Jacky Xao
+    #Date: January 14 2014 
+    #Purpose: string overloader
+    #Return Value: domino value
+    def __str__(self):
+        strValue = str(self.value)
+        if self.value < 10:
+            strValue = "0" + strValue
+        return strValue
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #get
+    #Author: Jacky Xao
+    #Date: January 14 2014
+    #Purpose: returns the value of the domino
+    #Return Value: domino value
+    def get(self):
+        return self.value
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #randomize
+    #Author: Jacky Xao
+    #Date: January 14 2014
+    #Purpose: randomizes the domino value
+    def randomize(self):
+        value = 9
+        while (69 - value) % 10 < 3:
+            value = random.randint(0,66)
+        self.value = value
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #setValue
+    #Author: Jacky Xao
+    #Date: January 14 2014
+    #Purpose: sets the value of the domino. Default is 66
+    #Parameters: The value of the domino
+    def setValue(self,value=66):
+        if value > 66 or value < 0 or (69 - value) % 10 < 3:
+            value = 66
+        self.value = value
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #display
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: displays the domino
+    #Parameters: x-coord & y-coord of top left, canvas, orientation,
+                #faceUp, dot colour, reverse
+    def display(self,x,y,canvas,orient="h",face=True,dot="red",reverse = False):
+        if face:
+            fill = "white"
+        else:
+            fill = "deep sky blue"
+        if orient == "h":
+            canvas.create_rectangle(x,y,x+60,y+30,fill=fill,width=2)
+            canvas.create_line(x+30,y+1,x+30,y+29,fill="gray")
+        else:
+            canvas.create_rectangle(x,y,x+30,y+60,fill=fill,width=2)
+            canvas.create_line(x+1,y+30,x+29,y+30,fill="gray")
+        if face:
+            value1 = self.get() // 10
+            value2 = self.get() % 10
+            if reverse:
+                temp = value1
+                value1 = value2
+                value2 = temp
+            if orient == "h":
+                self.drawDots(x,y,value1,canvas,dot)
+                self.drawDots(x+29,y,value2,canvas,dot)
+            else:
+                self.drawDots(x,y,value1,canvas,dot)
+                self.drawDots(x,y+29,value2,canvas,dot)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #drawDots
+    #Author: Jacky Xao
+    #Date: January 14 2014
+    #Purpose: to draw dots
+    #Parameters: x-coord & y-coord of top left, value, canvas, colour
+    def drawDots(self,x,y,value,canvas,colour="black"):
+        dot = colour
+        if value % 2 == 1:
+            canvas.create_oval(x+12,y+12,x+18,y+18,fill=dot)
+        if value > 1:
+            canvas.create_oval(x+3,y+3,x+9,y+9,fill=dot)
+            canvas.create_oval(x+21,y+21,x+27,y+27,fill=dot)
+        if value > 3:
+            canvas.create_oval(x+21,y+3,x+27,y+9,fill=dot)
+            canvas.create_oval(x+3,y+21,x+9,y+27,fill=dot)
+        if value == 6:
+            canvas.create_oval(x+3,y+12,x+9,y+18,fill=dot)
+            canvas.create_oval(x+21,y+12,x+27,y+18,fill=dot)
+#___________________________________________
+#Hand class
+#Author: Jacky Xao 
+#Date: January 16 2014
+#Purpose: a hand of dominos
+#Fields:
+    #domino: list of dominos
+    #size: size of hand
+#Methods:
+    #value: returns the value from a domino at a position (1 + index)
+        #domino: domino index
+    #handSize: returns the size of the hand
+    #findValue: returns the index of a value in the hand. -1 if not found
+        #value: the value to search for
+    #addDomino: adds a domino to the hand
+        #value: the domino to add
+    #dropDomino: drops a domino from the hand
+        #value: the value of the domino to drop
+    #displayHand: displays the hand
+        #x: x-coord of top left corner of 1st domino
+        #y: y-coord of top left corner of 1st domino
+        #canvas: canvas to draw on
+        #orient: "h" for horizontal, "v" for vertical. Default is "h"
+        #faceUp: True for dots shown, False for no dots. Default is True
+        #dot: colour of the dots
+class Hand:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__init__
+    #Author: Jacky Xao
+    #Date: Januuary 15 2014
+    #Purpose: constructor
+    def __init__(self):
+        self.domino = []
+        self.size = len(self.domino)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__str__
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: string overloader
+    #Return Value: values in the hand
+    def __str__(self):
+        hand = ""
+        for count in range(self.size):
+            hand = hand + str(self.domino[count].get()) + ","
+        hand = hand[:len(hand)-1]
+        return hand
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #value
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: to get the value from a domino at a position
+    #Parameters: the position of the domino
+    #Return Value: the value at the position
+    def value(self,domino):
+        return self.domino[(domino-1)].get()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #handSize
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: to get the size of the hand
+    #Return Value: the size of the hand
+    def handSize(self):
+        return self.size
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #findValue
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: to find a value in the hand
+    #Parameters: the value to search for
+    #Return Value: the index position
+    def findValue(self,value):
+        Sentinel = Domino()
+        Sentinel.setValue(value)
+        self.domino.append(Sentinel)
+        index = -1
+        count = 0
+        while value != self.domino[count].get():
+            count+=1
+        if count < 7:
+            index = count
+        del self.domino[len(self.domino)-1]
+        return index
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #addDomino
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: add a domino to the hand
+    #Parameters: domino to add
+    def addDomino(self,value):
+        domino = Domino()
+        domino.setValue(value)
+        self.domino.append(domino)
+        self.size = len(self.domino)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #dropDomino
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: drops a domino from the hand
+    def dropDomino(self,value):
+        if self.findValue(value) >= 0:
+            del self.domino[self.findValue(value)]
+            self.size = self.size - 1
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #displayHand
+    #Author: Jacky Xao
+    #Date: January 15 2014
+    #Purpose: displays the hand
+    #Parameters: x-coord & y-coord of top left, canvas, orientation, faceUp, dot colour
+    def displayHand(self,x,y,canvas,orient="h",face=True,dot="red"):
+        if orient == "h":
+            canvas.create_rectangle(x-1,y-1,x+281,y+71,fill="lime green",outline="lime green")
+            for count in range(self.size):
+                if count < 4:
+                    self.domino[count].display(x+70*count,y,canvas,orient,face,dot)
+                else:
+                    self.domino[count].display(x+70*(count-4),y+40,canvas,orient,face,dot)
+        else:
+            canvas.create_rectangle(x-1,y-1,x+71,y+281,fill="lime green",outline="lime green")
+            for count in range(self.size):
+                if count < 4:
+                    self.domino[count].display(x,y+70*count,canvas,orient,face,dot)
+                else:
+                    self.domino[count].display(x+40,y+70*(count-4),canvas,orient,face,dot)
+#___________________________________________
+#Table class
+#Author: Jacky Xao
+#Date: January 17 2014
+#Purpose: creates a table to place dominos on
+#Fields:
+    #table: list of dominos
+    #size: size of table
+    #left: domino value on the left
+    #Right: domino value on the right
+    #lcount: counter for how many dominos on the left
+    #rcount: counter for how many dominos on the right
+    #lx: left domino x-coord
+    #ly: left domino y-coord
+    #rx: right domino x-coord
+    #ry: right domino y-coord
+#Methods:
+    #tableValue: returns the values in the table
+    #getLeft: get the domino value on the left
+    #getRight: get the domino value on the right
+    #addTable: add the domino value to the table list
+        #value: domino value
+        #pos: left/right side of the table
+    #drawTable:
+        #x: x-coord of upper left
+        #y: y-coord of upper left
+        #canvas: canvas to draw on
+        #colour: colour of background
+    #draw: draws to domino on the table
+        #canvas: canvas to draw on
+        #pos: draw on left or right
+        #colour: colour of dot
+class Table:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__init__
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: constructor
+    def __init__(self):
+        self.table = []
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getLeft
+    #Author: Jacky Xao
+    #Date: January 16 2014
+    #Purpose: get the domino value on the left
+    #Return Value: the left domino value
+    def getLeft(self):
+        value = self.table[0].get()
+        self.left = value // 10
+        return self.left
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getRight
+    #Author: Jacky Xao
+    #Date: January 16 2014
+    #Purpose: get the domino value on the right
+    #Return Value: the right domino value
+    def getRight(self):
+        value = self.table[self.size-1].get()
+        self.right = value % 10
+        return self.right       
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #addTable
+    #Author: Jacky Xao
+    #Date: January 16 2014
+    #Purpose: add the domino value to the table list
+    #Parameters: the domino value, left/right
+    def addTable(self,value,pos="l"):
+        domino = Domino()
+        domino.setValue(value)
+        if pos == "l":
+            self.table.insert(0,domino)
+        else:
+            self.table.append(domino)
+        self.size = len(self.table)
+        self.left = self.getLeft()
+        self.right = self.getRight()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #drawTable
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: draw the table and initialize counters and x,y coords
+    #Parameters: x-coord, y-coord, canvas, colour
+    def drawTable(self,x,y,canvas,colour):
+        canvas.create_rectangle(x,y,x+450,y+270,fill = colour)
+        self.lx = x + 270
+        self.ly = y + 31
+        self.rx = x + 210
+        self.ry = y + 31
+        self.lcount = 0
+        self.rcount = 0
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #draw
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: draws the domino on the table
+    #Parameters: canvas, left/right, colour
+    def draw(self,canvas,pos,colour):
+        if pos == "l":
+            index = 0
+            if self.lcount < 4:
+                self.lx -= 60
+                self.table[index].display(self.lx,self.ly,canvas,"h",True,colour)
+            elif self.lcount < 7:
+                if self.lcount == 4:
+                    self.ly = self.ly - 30
+                self.ly = self.ly + 60
+                self.table[index].display(self.lx,self.ly,canvas,"v",True,colour,True)
+            elif self.lcount == 7:
+                self.ly += 30
+                self.lx += 30
+                self.table[index].display(self.lx,self.ly,canvas,"h",True,colour,True)
+            elif self.lcount < 13:
+                self.lx = self.lx + 60
+                self.table[index].display(self.lx,self.ly,canvas,"h",True,colour,True)
+            elif self.lcount == 13:
+                self.ly -= 60
+                self.lx += 30
+                self.table[index].display(self.lx,self.ly,canvas,"v",True,colour)
+            elif self.lcount < 19:
+                self.lx -= 60
+                self.table[index].display(self.lx,self.ly,canvas,"h",True,colour)
+            elif self.lcount == 19:
+                self.ly -= 60
+                self.table[index].display(self.lx,self.ly,canvas,"v",True,colour)
+                self.lx -= 30
+            elif self.lcount < 25:
+                self.lx = self.lx + 60
+                self.table[index].display(self.lx,self.ly,canvas,"h",True,colour,True)
+            elif self.lcount == 25:
+                self.ly -= 60
+                self.lx += 30
+                self.table[index].display(self.lx,self.ly,canvas,"v",True,colour)
+            self.lcount += 1
+        else:
+            index = self.size - 1
+            if self.rcount < 2:
+                self.rx += 60
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour)
+            elif self.rcount == 2:
+                self.rx += 60
+                self.table[index].display(self.rx,self.ry,canvas,"v",True,colour)
+                self.ry += 60
+                self.rx += 30
+            elif self.rcount < 8:
+                self.rx -= 60
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour,True)
+            elif self.rcount == 8:
+                self.rx -= 30
+                self.table[index].display(self.rx,self.ry,canvas,"v",True,colour)
+                self.ry += 60
+                self.rx -= 60
+            elif self.rcount < 14:
+                self.rx += 60
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour)
+            elif self.rcount == 14:
+                self.rx += 60
+                self.table[index].display(self.rx,self.ry,canvas,"v",True,colour)
+                self.ry += 60
+                self.rx += 30
+            elif self.rcount < 21:
+                self.rx -= 60
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour,True)
+            elif self.rcount == 21:
+                self.rx -= 30
+                self.ry -= 30
+                self.table[index].display(self.rx,self.ry,canvas,"v",True,colour,True)
+            elif self.rcount < 24:
+                self.ry -= 60
+                self.table[index].display(self.rx,self.ry,canvas,"v",True,colour,True)
+            elif self.rcount == 24:
+                self.ry -= 30
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour)
+            elif self.rcount < 26:
+                self.rx = self.rx + 60
+                self.table[index].display(self.rx,self.ry,canvas,"h",True,colour)
+            self.rcount += 1
+#___________________________________________
+#DominoGame class
+#Author: Jacky Xao
+#Date: January 21 2014
+#Purpose: to play a game of dominos.
+#Requirements: import time, import random, import tkMessageBox, from Tkinter import*
+#Fields:
+    #deck: a list of all possible dominos
+    #names: a list of the player names
+    #hands: a list of the player's hands
+    #board: a table to play on
+    #cheat: to cheat and see other player's pieces
+    #canvas: canvas to draw on
+    #userValue: the value which the user had chosen
+    #turn: True if it is the user's turn. False otherwise
+    #first: True if user has to play 66. False otherwise
+    #game: True if the player can start a new game. False otherwise
+    #Cheater: blnVar for checkbox. True to cheat. False otherwise
+    #over: True if game is over. False otherwise.
+    #simu: True if simulation is active. False otherwise.
+    #self.score: the current score
+    #self.highest: the highest score
+#Methods:
+    #generateDeck: generates a deck of 28 individual dominos with values from 0 - 66
+    #getNames: get the names of the players from the names.txt
+    #displayName: display the names
+    #getColour: get the specific colour of the player
+        #player: the player to get the colour for
+    #deal: deals the dominos to each player
+    #displayHands: display the player's hand on the board
+        #player: the player
+    #setCheat: sets the cheat option
+        #cheat: to cheat or not to cheat
+    #cheatDisplay: updates self.cheat and the hands
+    #canMove: True if the player can move, False otherwise
+        #player: the player
+    #getCompMove: gets the computer's move
+	#player: the computer player
+    #getUserMove: get the user's move
+    #newGame: starts a new game
+    #setUp: set up the game
+    #win: checks to see if someone won or get a tie game
+    #play: starts the domino game
+    #mouseClick: does something when the user clicks within a certain range
+    #check:  places the chosen domino of the left or right side of the table
+        #pos: left or right
+    #createText: creates text on the canvas
+    #simulation: enables simulation mode
+    #loadScore: loads the high score
+    #writeScore: writes the high score
+    #getScore: gets the score at the end of the round
+            #player: the player who won
+    #addHighscore: update the highscore
+    #showScore: shows the score
+class DominoGame:
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #__init__
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: constructor
+    #Parameters: x-coords, y-coords of canvas
+    def __init__(self,x=0,y=0):
+        #initializing
+        self.deck = []
+        self.names = []
+        self.hands = []
+        self.cheat = False
+        self.first = False
+        self.game = True
+        self.turn = False
+        self.over = True
+        self.simu = False
+        self.Cheater = BooleanVar()
+        self.Cheater.set("False")
+        for x in range(4):
+            self.hands.append(Hand())
+        self.board = Table()
+        self.score = "--:00"
+        #canvas setup
+        self.canvas = Canvas(root, width = 900, height = 610,bg="gray")
+        self.canvas.place(x=x,y=y)
+        self.canvas.pack()
+        self.canvas.create_rectangle(2,2,690,510,fill="lime green")
+        self.board.drawTable(120,120,self.canvas,"dark green")
+        pikachu=Pikachu()
+        pikachu.drawPikachu(self.canvas,1,1)
+        self.canvas.create_rectangle(2,510,690,610,fill="white")
+        self.canvas.create_rectangle(60,5,200,35,fill="gray60")
+        font = ("Calibri","15","bold")
+        self.canvas.create_text(130,20,text="New Game",fill="white",anchor=CENTER,font=font)
+        self.canvas.bind("<Button-1>",self.mouseClick)
+        chkCheat = Checkbutton(self.canvas,text="Cheat",variable=self.Cheater,font=font,
+                               activebackground="lime green",bg="lime green",
+                               onvalue="True",offvalue="False",command=lambda:self.cheatDisplay())
+        chkCheat.place(x=590,y=5)
+        btnSimu = Button(self.canvas,text="Simulation",command=lambda:self.simulation(),font=font,
+                         width=17)
+        btnSimu.place(x=700,y=560)
+        #initializing via methods
+        self.generateDeck()
+        self.getName()
+        self.loadScore()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #generateDeck
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: generates a deck of 28 individual dominos with values from 0 - 66
+    def generateDeck(self):
+        value = 0
+        for count in range(67):
+            if (69 - value) % 10 > 2:
+                ten = value // 10
+                one = value % 10
+                if one * 10 + ten <= value:
+                    self.deck.append(value)
+            value += 1                
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getName
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: get the names of the players from the names.txt
+    def getName(self):
+        count = 0
+        inputFile = open("name.txt",'r')
+        for line in inputFile:
+            if count < 4:
+                if len(line.strip())==0:
+                    name = "Player "+str(count + 1)
+                else:
+                    name = line.strip()[8:].strip()
+                    if len(name) == 0:
+                        name = "Player "+str(count + 1)
+                    elif len(name) > 12:
+                        name = name[:12] + "..."
+                self.names.append(name)
+                count = count + 1
+        self.displayName()
+        outputFile = open("name.txt",'w')
+        for count in range(4):
+            outputFile.write("Player%i:%s\n"%(count + 1,self.names[count]))
+        strHelp = "\nHelp:\nEnter the player's name beside the colon of each player."
+        strHelp = strHelp + "\nMaximum length of each name is 12 characters."
+        strHelp = strHelp + "\nSorry for those who have long names."
+        outputFile.write(strHelp)
+        outputFile.close()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #displayName
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: display the names
+    def displayName(self):
+        self.canvas.create_text(345,495,text=self.names[0],
+                                anchor=CENTER,font=("Calibri","14","bold"))
+        self.canvas.create_text(70,110,text=self.names[1],
+                                anchor=CENTER,font=("Calibri","14","bold"))
+        self.canvas.create_text(345,15,text=self.names[2],
+                                anchor=CENTER,font=("Calibri","14","bold"))
+        self.canvas.create_text(625,110,text=self.names[3],
+                                anchor=CENTER,font=("Calibri","14","bold"))
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getColour
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: get the specific colour of the player
+    #Parameters: player
+    #Return Value: colour
+    def getColour(self,player):
+        if player == 1:
+            colour = "red"
+        elif player == 2:
+            colour = "yellow"
+        elif player == 3:
+            colour = "blue"
+        else:
+            colour = "purple"
+        return colour
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #deal
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: deals the dominos to each player
+    def deal(self):
+        text = "Now dealing"
+        self.createText(text)
+        for count in range(28):
+            if count % 6 == 0:
+                text = text + "."
+                self.createText(text)
+            player = count % 4
+            index = random.randint(0,(len(self.deck)-1))
+            value = self.deck.pop(index)
+            self.hands[player].addDomino(value)
+            self.displayHands(player)
+            self.canvas.update()
+            time.sleep(0.1)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #displayHand
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: display the player's hand on the board
+    #Parameters: player
+    def displayHands(self,player):
+        if player == 1:
+            self.hands[0].displayHand(210,410,self.canvas,"h",True,self.getColour(1))
+        elif player == 2:
+            self.hands[1].displayHand(30,125,self.canvas,"v",self.cheat,self.getColour(2))
+        elif player == 3:
+            self.hands[2].displayHand(210,30,self.canvas,"h",self.cheat,self.getColour(3))
+        else:
+            self.hands[3].displayHand(590,125,self.canvas,"v",self.cheat,self.getColour(4))
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #setCheat
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: sets the cheat option
+    #Parameters: cheat
+    def setCheat(self,cheat=False):
+        self.cheat = cheat
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #cheatDisplay
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: updates self.cheat and hands
+    def cheatDisplay(self):
+        if not self.simu:
+            if self.Cheater.get():
+                self.cheat = True
+            else:
+                self.cheat = False
+            if not self.over:
+                for c in range(4):
+                    self.displayHands(c)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #canMove
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: returns True if the player can move, False otherwise
+    #Parameters: player
+    #Return Value: True/False
+    #technically it's a search
+    def canMove(self,player):
+        blnMove = False
+        for count in range(self.hands[player-1].handSize()):
+            value = self.hands[player-1].value(count)
+            if value // 10 == self.board.getLeft():
+                blnMove = True
+            elif value % 10 == self.board.getLeft():
+                blnMove = True
+            elif value // 10 == self.board.getRight():
+                blnMove = True
+            elif value % 10 == self.board.getRight():
+                blnMove = True
+        return blnMove
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getCompMove
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: gets the computer's move
+    #Parameters: the player
+    def getCompMove(self,player):
+        self.game = False
+        if self.canMove(player):
+            text = self.names[player-1] + "'s turn."
+            self.createText(text)
+            blnFound = False
+            count = -1
+            while not blnFound and count < self.hands[player-1].handSize()-1:
+                count +=1
+                value = self.hands[player-1].domino[count].get()
+                if self.board.getLeft() == value % 10:
+                    blnFound = True
+                    pos = "l"
+                    switch = False
+                elif self.board.getRight() == value // 10:
+                    blnFound = True
+                    pos = "r"
+                    switch = False
+                elif self.board.getLeft() == value // 10:
+                    blnFound = True
+                    pos = "l"
+                    switch = True
+                elif self.board.getRight() == value % 10:
+                    blnFound = True
+                    pos = "r"
+                    switch = True
+            self.hands[player-1].dropDomino(value)
+            self.displayHands(player)
+            if switch:
+                value = (value % 10) * 10 + (value // 10)
+            self.board.addTable(value,pos)
+            colour = self.getColour(player)
+            self.board.draw(self.canvas,pos,colour)
+        else:
+            text = self.names[player-1] + " passed."
+            self.createText(text)
+        self.win(player)   
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getUserMove
+    #Author: Jacky Xao
+    #Date: January 18 2014
+    #Purpose: get the user's move (to wait for the mouse click event)
+    def getUserMove(self):
+        self.game = True
+        if not self.canMove(1):
+            text = "You have no possible moves. Hit left or right to pass."
+            self.createText(text)
+        elif self.first:
+            text = "You have domino 66. Place it on the board to begin."
+            self.createText(text)
+        else:
+            text = "Your turn. Choose a domino to place on the table."
+            self.createText(text)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #newGame
+    #Author: Jacky Xao
+    #Date: January 19
+    #Purpose: starts a new game
+    def newGame(self):
+        self.canvas.unbind("<Button-1>")
+        self.canvas.delete(ALL)
+        self.deck = []
+        self.hands = []
+        self.first = False
+        for x in range(4):
+            self.hands.append(Hand())
+        self.board = Table()
+        self.generateDeck()
+        self.loadScore()
+        self.canvas.create_rectangle(2,2,690,510,fill="lime green")
+        pikachu=Pikachu()
+        pikachu.drawPikachu(self.canvas,1,1)
+        self.canvas.create_rectangle(2,510,690,610,fill="white")
+        self.canvas.update()
+        self.setUp()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #setUp
+    #Author: Jacky Xao
+    #Date: January 18 2014
+    #Purpose: set up the game
+    def setUp(self):
+        self.board.drawTable(120,120,self.canvas,"dark green")
+        self.getName()
+        self.deal()
+        for count in range(4):
+            self.displayHands(count+1)
+        self.userValue = -1
+        self.turn = True   
+        self.game = True 
+        font=("Calibri","20")
+        self.canvas.create_rectangle(40,430,100,460,fill="gray60")
+        self.canvas.create_text(70,445,text="Left",fill="white",anchor=CENTER,font=font)
+        self.canvas.create_rectangle(590,430,650,460,fill="gray60")
+        self.canvas.create_text(620,445,text="Right",fill="white",anchor=CENTER,font=font)
+        self.canvas.create_rectangle(60,5,200,35,fill="gray60")
+        self.canvas.create_text(130,20,text="New Game",fill="white",anchor=CENTER,font=font)
+        self.canvas.bind("<Button-1>",self.mouseClick)
+        self.board.addTable(66,"l")
+        self.play()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #win
+    #Author: Jacky Xao
+    #Date: January 17 2014
+    #Purpose: checks to see if someone won or get a tie game
+    def win(self,player):
+        win = 2
+        if not self.canMove(4) and not self.canMove(3):
+            if not self.canMove(1) and not self.canMove(2):
+                win = 1
+        for count in range(4):
+            if self.hands[count].handSize() == 0:
+                win = 0
+        if win == 2:
+            time.sleep(.5)
+            self.canvas.update()
+            turn = player + 1
+            if turn == 5:
+                turn = 1
+                if not self.simu:
+                    self.turn = True
+                    self.game = True
+                    self.getUserMove()
+                else:
+                    self.turn = False
+                    self.getCompMove(turn)
+            else:
+                self.turn = False
+                self.getCompMove(turn)
+        else:
+            if win == 1:
+                text="It's a tie game."
+                self.createText(text)
+            else:
+                text = self.names[player-1],"won!"
+                if player == 1 and not self.simu:
+                    text = "You won!"
+                self.createText(text)
+                self.getScore(player)
+            self.over = True
+            self.turn = False
+            self.game = True
+            self.setCheat(True)
+            self.simu = False
+            for count in range(4):
+                self.displayHands(count+1)
+            self.setCheat(False)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #play
+    #Author: Jacky Xao
+    #Date: January 19 2014
+    #Purpose: Play. The. Game.          
+    def play(self):
+        self.over = False
+        player66 = -1
+        player = 0
+        while player66 == -1:
+            player += 1
+            player66 = self.hands[player-1].findValue(66)
+        if player > 1 or self.simu:
+            text = self.names[player-1], "starts."
+            self.createText(text)
+            self.canvas.update()
+            self.hands[player-1].dropDomino(66)
+            colour = self.getColour(player)
+            self.board.draw(self.canvas,"l",colour)
+            self.displayHands(player)
+            time.sleep(1)
+            self.win(player)
+        else:
+            self.first = True
+            self.turn = True
+            self.game = True
+            self.getUserMove()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #mouseClick
+    #Author: Jacky Xao
+    #Date: January 19 2014
+    #Purpose: does something when the user clicks within a certain range
+    #Parameters: the mouse click event
+    def mouseClick(self,event):
+        if self.game:
+            if event.y >= 5 and event.y <= 35:
+                if event.x >= 60 and event.x <= 200:
+                    strMessage = "Do you want to start a new game?"
+                    blnAns = tkMessageBox.askyesno("Dominos",strMessage)
+                    if blnAns:
+                        self.newGame()
+        if self.turn:
+            if event.y >= 430 and event.y <= 460:
+                if event.x >= 40 and event.x <= 100:
+                    self.check("l")
+                    self.displayHands(1)
+                elif event.x >= 590 and event.x <= 650:
+                    self.check("r")
+                    self.displayHands(1)                    
+            elif self.canMove(1):
+                if event.y >= 410 and event.y <= 440:
+                    if event.x >= 210 and event.x <= 270 and self.hands[0].handSize() >= 1:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(209,409,271,441,outline="gold")
+                        self.userValue = self.hands[0].value(1)
+                    if event.x >= 280 and event.x <= 340 and self.hands[0].handSize() >= 2:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(279,409,341,441,outline="gold")
+                        self.userValue = self.hands[0].value(2)
+                    if event.x >= 350 and event.x <= 410 and self.hands[0].handSize() >= 3:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(349,409,411,441,outline="gold")
+                        self.userValue = self.hands[0].value(3)
+                    if event.x >= 420 and event.x <= 480 and self.hands[0].handSize() >= 4:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(419,409,481,441,outline="gold")
+                        self.userValue = self.hands[0].value(4)
+                    self.canvas.update()
+                elif event.y >= 450 and event.y <= 480:
+                    if event.x >= 210 and event.x <= 270 and self.hands[0].handSize() >= 5:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(209,449,271,481,outline="gold")
+                        self.userValue = self.hands[0].value(5)
+                    if event.x >= 280 and event.x <= 340 and self.hands[0].handSize() >= 6:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(279,449,341,481,outline="gold")
+                        self.userValue = self.hands[0].value(6)
+                    if event.x >= 350 and event.x <= 410 and self.hands[0].handSize() >= 7:
+                        self.displayHands(1)
+                        self.canvas.create_rectangle(349,449,411,481,outline="gold")
+                        self.userValue = self.hands[0].value(7)
+                    self.canvas.update()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #check
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: places the chosen domino of the left or right side of the table
+    #Parameters: pos
+    def check(self,pos):
+        if self.first:
+            if self.userValue == 66:
+                self.hands[0].dropDomino(66)
+                colour = self.getColour(1)
+                self.board.draw(self.canvas,"l",colour)
+                self.displayHands(1)
+                self.first = False
+                self.win(1)
+            else:
+                text = "You must start with the 66 domino. Choose again."
+                self.createText(text)
+        elif not self.canMove(1):
+            self.win(1)
+        else:
+            if self.userValue == -1:
+                text = "Choose a domino to place on the table."
+                self.createText(text)
+            else:
+                value = self.userValue
+                if pos == "l":
+                    if value // 10 == self.board.getLeft():
+                        blnMove = True
+                        value = (value % 10) * 10 + (value // 10)
+                    elif value % 10 == self.board.getLeft():
+                        blnMove = True
+                    else:
+                        blnMove = False
+                else:
+                    if value // 10 == self.board.getRight():
+                        blnMove = True
+                    elif value % 10 == self.board.getRight():
+                        blnMove = True
+                        value = (value % 10) * 10 + (value // 10)
+                    else:
+                        blnMove = False
+                if blnMove:
+                    self.hands[0].dropDomino(self.userValue)
+                    if value != 66:
+                        self.board.addTable(value,pos)
+                    colour = self.getColour(1)
+                    self.board.draw(self.canvas,pos,colour)
+                    self.displayHands(1)
+                    self.win(1)
+                else:
+                    text = "You cannot place this domino there. Please check\nthe values again."
+                    self.createText(text)
+                self.userValue = -1    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #createText
+    #Author: Jacky Xao
+    #Date: January 18 2014
+    #Purpose: creates text on the canvas
+    def createText(self,text):
+        font=("Calibri","20")
+        self.canvas.create_rectangle(2,510,690,610,fill="white")
+        if self.simu:
+            self.canvas.create_text(550,565,text="Simulation",anchor=NW,font=font)
+        self.canvas.create_text(10,520,text=text,anchor=NW,font=font)
+        self.canvas.update()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #simulation
+    #Author: Jacky Xao
+    #Date: January 20 2014
+    #Purpose: enable simulation mode
+    def simulation(self):
+        if (self.turn or self.game) and not self.simu:
+            strMessage = "Do you want to start a simulation?"
+            blnAns = tkMessageBox.askyesno("Dominos",strMessage)
+            if blnAns:
+                self.simu = True
+                self.turn = False
+                self.setCheat(True)
+                self.newGame()
+        elif self.simu:
+            strMessage = "Please wait until the simulation is over."
+            tkMessageBox.showwarning("Dominos",strMessage)
+        else:
+            strMessage = "Please wait until it is your turn."
+            tkMessageBox.showwarning("Dominos",strMessage)
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #loadScore
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: loads the high scores
+    def loadScore(self):
+        lstLine = []
+        inputFile = open("score.txt",'r')
+        counter = 0
+        for line in inputFile:
+            lstLine.append(line.strip())
+        if len(lstLine) == 0:
+            self.highest = "--:0"
+            self.writeScore()
+        elif lstLine[0] == "":
+            self.highest = "--:0"
+            self.writeScore()
+        else:
+            self.highest = lstLine[0]
+        self.showScore()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #writeScore
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: writes the high scores
+    def writeScore(self):
+        outputFile = open("score.txt",'w')
+        outputFile.write(self.highest)
+        outputFile.close()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #getScore
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: gets the score at the end of the round
+    #Parameters: player who won
+    def getScore(self,player):
+        intScore = 0
+        for players in range(4):
+            if players + 1 != player:
+                for count in range(self.hands[players].handSize()):
+                    value = self.hands[players].value(count)
+                    intScore += (value // 10) + (value % 10)
+        self.score = self.names[player-1]+":%i"%intScore
+        text = self.names[player-1] + " scored %i points."%intScore
+        if player == 1 and not self.simu:
+            text = "You scored %i points."%intScore
+        font=("Calibri","20")
+        self.canvas.create_text(10,565,text=text,anchor=NW,font=font)
+        self.showScore()
+        if not self.simu:
+            self.addHighscore()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #addHighscore
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: update the highscore
+    def addHighscore(self):
+        colon = self.score.find(":")
+        score = int(self.score[colon+1:])
+        highest = int(self.highest[(self.highest.find(":"))+1:])
+        if score >= highest:
+            self.highest = self.score
+            self.writeScore()
+        self.showScore()
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #showScore
+    #Author: Jacky Xao
+    #Date: January 21 2014
+    #Purpose: 
+    def showScore(self):
+        font=("Calibri","20")
+        self.canvas.update()
+        text = "High Score"
+        self.canvas.create_text(795,25,text=text,anchor=CENTER,font=font)
+        self.canvas.create_rectangle(691,40,900,70,fill="gray",outline="")
+        font=("Courier New","18","bold")
+        text = self.highest
+        self.canvas.create_text(795,55,text=text,anchor=CENTER,font=font)
+        self.canvas.update()
+#===================GUI=====================
+#Menu
+menubar = Menu(root)
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label="Exit",command=lambda:root.destroy())
+menubar.add_cascade(label="File", menu=filemenu)
+helpmenu = Menu(menubar, tearoff=0)
+helpmenu.add_command(label="Help", command=lambda:tkMessageBox.showinfo("Help",strMessage))
+menubar.add_cascade(label="Help", menu=helpmenu)
+root.config(menu=menubar)
+strMessage = """Click on the domino to select it.
+Click on 'Left' to place the domino
+on the left side of 66. Click on
+'Right' to place the domino on the
+right side of 66. To change the
+player's name, open the name.txt file
+and change the names. Hit 'Simulation' to
+begin a simulation of 4 computers."""
+#==================Main=====================
+Game = DominoGame(0,0)
+mainloop()
